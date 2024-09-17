@@ -4,10 +4,10 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Laravel 10 CRUD Example from scratch - ItSolutionStuff.com</h2>
+                <h2>REST API CRUD</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('markers.create') }}"> Create New Product</a>
+                <a class="btn btn-success" href="{{ route('markers.create') }}"> Create New marker</a>
             </div>
         </div>
     </div>
@@ -27,20 +27,20 @@
             <th>Longitude</th>
             <th width="280px">Action</th>
         </tr>
-        @foreach ($markers as $product)
+        @foreach ($marker as $marker)
         <tr>
-            <td>{{ $product->name }}</td>
-            <td>{{ $product->description }}</td>
-            <td>{{ $product->imgURL }}</td>
-            <td>{{ $product->latitude }}</td>
-            <td>{{ $product->longitude }}</td>
+            <td>{{ $marker->name }}</td>
+            <td>{{ $marker->description }}</td>
+            <td>{{ $marker->imgURL }}</td>
+            <td>{{ $marker->latitude }}</td>
+            <td>{{ $marker->longitude }}</td>
 
             <td>
-                <form action="{{ route('markers.destroy',$product->id) }}" method="POST">
+                <form action="{{ route('markers.destroy',$marker->id) }}" method="POST">
 
-                    <a class="btn btn-info" href="{{ route('markers.show',$product->id) }}">Show</a>
+                    <a class="btn btn-info" href="{{ route('markers.show',$marker->id) }}">Show</a>
 
-                    <a class="btn btn-primary" href="{{ route('markers.edit',$product->id) }}">Edit</a>
+                    <a class="btn btn-primary" href="{{ route('markers.edit',$marker->id) }}">Edit</a>
 
                     @csrf
                     @method('DELETE')
@@ -52,6 +52,6 @@
         @endforeach
     </table>
 
-    {!! $markers->links() !!}
+
 
 @endsection

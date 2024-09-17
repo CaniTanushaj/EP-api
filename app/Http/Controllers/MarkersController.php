@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMarkersRequest;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\UpdateMarkersRequest;
 use App\Models\Markers;
 use Illuminate\View\View;
@@ -17,9 +18,9 @@ class MarkersController extends Controller
      */
     public function index(): View
     {
-        $markers = Markers::latest()->paginate(5);
+        $marker = Markers::latest()->paginate(5);
 
-        return view('markers.index',compact('markers'))
+        return view('markers.index',compact('marker'))
                     ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -52,30 +53,33 @@ class MarkersController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(markers $Markers): View
+    public function show(markers $marker): View
     {
-        return view('markers.show',compact('markers'));
+        return view('markers.show',compact('marker'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Markers $Markers): View
+    public function edit(Markers $marker): View
     {
-        return view('markers.edit',compact('Markers'));
+        return view('markers.edit',compact('marker'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Markers $Markers): RedirectResponse
+    public function update(Request $request, Markers $marker): RedirectResponse
     {
         $request->validate([
             'name' => 'required',
-            'detail' => 'required',
+            'description' => 'required',
+            'imgURL' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required',
         ]);
 
-        $Markers->update($request->all());
+        $marker->update($request->all());
 
         return redirect()->route('markers.index')
                         ->with('success','Markers updated successfully');
@@ -84,9 +88,9 @@ class MarkersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Markers $Markers): RedirectResponse
+    public function destroy(Markers $marker): RedirectResponse
     {
-        $Markers->delete();
+        $marker->delete();
 
         return redirect()->route('markers.index')
                         ->with('success','Markers deleted successfully');
