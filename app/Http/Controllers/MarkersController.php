@@ -18,7 +18,7 @@ class MarkersController extends Controller
      */
     public function index(): View
     {
-        $marker = Markers::latest()->paginate(5);
+        $marker = Markers::latest()->paginate(100);
 
         return view('markers.index',compact('marker'))
                     ->with('i', (request()->input('page', 1) - 1) * 5);
